@@ -26,7 +26,7 @@ Host 插件 --stdin/stdout JSON-RPC--> chrome-helper.mjs(Node>=22, 全局 WebSoc
 
 ## 移植 / 恢复注意
 
-1. **放置 helper**：把 `chrome-helper.mjs` 复制到目标工作区的 `.dsh-chrome/` 目录（host.js 从此路径读取并 spawn）。
+1. **放置 helper**：把 `chrome-helper.mjs` 复制到目标工作区的 `.dsh-chrome/` 目录（host.js 从此路径读取并 spawn）。本仓库已在根目录附带运行时副本 `.dsh-chrome/chrome-helper.mjs`（与库内副本保持同源，clone 后即可用）。
 2. **动态恢复**：读 `host.js` 内容 → `cordis_define`（kind: new + idPrefix，如 `chrom`）→ `cordis_run`。纯 Host 插件，无 Client 半，无需 UI 授权。
 3. **预设挂载**：把 `preset/plugin.js` + `chrome-helper.mjs` 放进预设目录，并在 `agent.cordis.yml` 加行：
    ```yaml
@@ -39,7 +39,7 @@ Host 插件 --stdin/stdout JSON-RPC--> chrome-helper.mjs(Node>=22, 全局 WebSoc
    - Chrome 151+ 的 CDP 需用**浏览器级 WebSocket + `Target.attachToTarget(flatten:false)` + `sendMessageToTarget`**（直连 `/devtools/page/*` 与 flatten 会话可能无响应）。
    - 专用实例使用独立临时 profile，**不携带**用户日常浏览器的登录态。
    - 沙箱注意：从 pwsh 等受限工具启动的 Chrome 无法派生渲染进程，需从 Host 插件上下文 spawn（本插件正是如此）。
-5. 验证：`node --check host.js`；`node --check preset/plugin.js`。
+5. 验证：`custom-plugins\validate.ps1`（`host.js` 是函数体，顶层 return 合法，勿用 `node --check`；`preset/plugin.js`、`chrome-helper.mjs` 是真模块，用 `node --check`）。
 
 ## 已知限制
 
