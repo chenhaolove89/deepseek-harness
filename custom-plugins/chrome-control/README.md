@@ -26,7 +26,7 @@ Host 插件 --stdin/stdout JSON-RPC--> chrome-helper.mjs(Node>=22, 全局 WebSoc
 
 ## 移植 / 恢复注意
 
-1. **放置 helper**：把 `chrome-helper.mjs` 复制到目标工作区的 `.dsh-chrome/` 目录（host.js 从此路径读取并 spawn）。本仓库已在根目录附带运行时副本 `.dsh-chrome/chrome-helper.mjs`（与库内副本保持同源，clone 后即可用）。
+1. **放置 helper**：把 `chrome-helper.mjs` 复制到目标工作区的 `.dsh-chrome/` 目录（host.js 从此路径读取并 spawn）。根目录 `.dsh-chrome/` 是运行时位，被仓库 `.gitignore` 忽略、**不入库**；`custom-plugins\sync.ps1 setup` 会自动从库内副本放置。
 2. **动态恢复**：读 `host.js` 内容 → `cordis_define`（kind: new + idPrefix，如 `chrom`）→ `cordis_run`。纯 Host 插件，无 Client 半，无需 UI 授权。
 3. **预设挂载**：把 `preset/plugin.js` + `chrome-helper.mjs` 放进预设目录，并在 `agent.cordis.yml` 加行：
    ```yaml

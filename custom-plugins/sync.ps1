@@ -30,6 +30,14 @@ switch ($Action) {
                 Write-Host "[preset] $($p.Name) -> $dst"
             }
         }
+        # 3) 放置 chrome 运行时 helper（.dsh-chrome 被仓库 .gitignore 忽略、不入库，从库内副本放置）
+        $chromeHelper = Join-Path $Root 'chrome-control\chrome-helper.mjs'
+        $runtimeDir = Join-Path (Split-Path $Root -Parent) '.dsh-chrome'
+        if (Test-Path $chromeHelper) {
+            New-Item -ItemType Directory -Force -Path $runtimeDir | Out-Null
+            Copy-Item $chromeHelper (Join-Path $runtimeDir 'chrome-helper.mjs') -Force
+            Write-Host "[chrome] helper -> $runtimeDir"
+        }
         Write-Host 'setup 完成：新会话将自动加载 plugin-sourcelib 技能与已安装的 preset。'
     }
     'status' {
