@@ -225,6 +225,12 @@
       "@deepseek-ai/dsh-sdk-client": ["./packages/sdk/client/src"],
       "@deepseek-ai/dsh-sdk-protocol": ["./packages/sdk/protocol/src"],
       "@deepseek-ai/dsh-sdk-jsonrpc-server": ["./packages/sdk/server/src"],
+      // The custom packages: /types and /remote point at built declarations
+      // (the host face owns the emitted contract; client faces consume it).
+      "@deepseek-ai/dsh-ccswitch-import/types": ["./packages/client/ccswitch-import/lib/types/types.d.ts"],
+      "@deepseek-ai/dsh-ccswitch-import/remote": ["./packages/client/ccswitch-import/lib/typert.remote-client.d.ts"],
+      "@deepseek-ai/dsh-prompt-deepen/types": ["./packages/client/prompt-deepen/lib/types/types.d.ts"],
+      "@deepseek-ai/dsh-prompt-deepen/remote": ["./packages/client/prompt-deepen/lib/typert.remote-client.d.ts"],
       "@deepseek-ai/dsh-*": [
         "./packages/core/*/src",
         "./packages/prompt/*/src",

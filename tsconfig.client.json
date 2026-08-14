@@ -93,6 +93,8 @@
     { "path": "./packages/client/ui-settings-plugin-inventory" },
     { "path": "./packages/client/locale" },
     { "path": "./packages/client/web" },
+    { "path": "./packages/client/ccswitch-import/tsconfig.client.json" },
+    { "path": "./packages/client/prompt-deepen/tsconfig.client.json" },
     { "path": "./apps/web" }
   ]
 }
