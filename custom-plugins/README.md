@@ -25,6 +25,7 @@
 | ccsw-1 | CCSwitch 导入 + AI 工具 + 视觉描述（`ccswitch.list`/`ccswitch.import` RPC + `ccswitch_list`/`ccswitch_import`/`visual_describe` 工具） | dsh-ccswitch-import |
 | ccsw-lite | CCSwitch 导入 Lite | dsh-ccswitch-import-lite |
 | pdeep | Prompt Deepen 提示词深化（`prompt-deepen` RPC） | dsh-prompt-deepen |
+| chrome-control | Chrome 控制（CDP）：16 个 chrome_* 工具，驱动专用 Chrome 实例（含预设平面版 `preset/plugin.js`，可挂进 vue-admin 预设） | dsh-chrome-control |
 | template-demo | 新插件模板（hello 示例） | — |
 
 ## 新电脑部署（换新机）

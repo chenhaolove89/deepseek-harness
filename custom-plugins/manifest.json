@@ -24,6 +24,13 @@
       "platform": "both"
     },
     {
+      "id": "chrome-control",
+      "name": "Chrome 控制（CDP）",
+      "path": "chrome-control",
+      "publicRepo": "https://github.com/chenhaolove89/dsh-chrome-control.git",
+      "platform": "host"
+    },
+    {
       "id": "template-demo",
       "name": "新插件模板",
       "path": "template-demo",

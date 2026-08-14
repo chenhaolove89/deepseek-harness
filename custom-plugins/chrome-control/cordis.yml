@@ -1,0 +1,22 @@
+# chrome-control 插件清单（manifest）
+# 这是给"移植 AI"看的规格文件，不是可直接挂载的 agent preset。
+id: chrome-control
+name: Chrome 控制（CDP）
+description: 通过 DevTools Protocol 控制一台专用 Chrome 实例：标签页、导航、可见 DOM 快照、点击/输入/按键/滚动、截图与页面 JS 求值，提供 chrome_open / chrome_status / chrome_goto / chrome_back / chrome_forward / chrome_reload / chrome_new_tab / chrome_close_tab / chrome_dom / chrome_click / chrome_type / chrome_keypress / chrome_scroll / chrome_screenshot / chrome_eval / chrome_close 共 16 个工具。
+version: 1.0.0
+platform: host
+
+# 源码文件映射（与 cordis_define 的 code.host 一一对应）
+files:
+  host: host.js
+
+# 运行时资产：chrome-helper.mjs 需放置到目标工作区 .dsh-chrome/ 目录
+# （host.js 启动时从 <workspaceRoot>/.dsh-chrome/chrome-helper.mjs 读取并 spawn）
+assets:
+  - chrome-helper.mjs
+
+# 依赖的 DSH 能力（移植时 AI 需在目标环境用 Inspect 逐项核对）
+dependencies:
+  host:
+    services: [subprocess, fs, sandboxPolicy, timer]
+    builtins: [harness]

@@ -38,3 +38,5 @@ apps/web/dist/
 worktrees/
 .agents/worktrees/
 .typert-*/
+# Local chrome-control runtime artifacts (helper + screenshots)
+.dsh-chrome/

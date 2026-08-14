@@ -249,3 +249,14 @@
   config:
     fetch: false
     searchTimeoutMs: 60000
+
+# ── chrome-control ──────────────────────────────────────────────────────────
+
+# Preset-plane Chrome control plugin (relative row: `plugin.js` resolves beside
+# this file, and the chrome-helper.mjs asset travels with it). Spawns a helper
+# Node process that drives a dedicated Chrome instance over CDP and registers
+# the chrome_* tools. The row publishes no service, so it needs no realm; it
+# resolves the host `subprocess`/`fs`/`sandboxPolicy`/`tools` instances and
+# registers tools into this preset's standing scope.
+- id: chrome-control
+  name: './chrome-control/plugin.js'
