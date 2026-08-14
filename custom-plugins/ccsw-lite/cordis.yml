@@ -1,0 +1,23 @@
+# ccswitch-import-lite 插件清单（manifest）
+# 这是给"移植 AI"看的规格文件，不是可直接挂载的 agent preset。
+id: ccswitch-import-lite
+name: CCSwitch 导入（精简版）
+description: 从 CCSWITCH（~/.cc-switch）读取模型供应商（地址、密钥、模型），批量导入为 DeepSeek Harness 的模型供应商；提供 ccswitch_list / ccswitch_import 两个 AI 工具与设置页「CCSwitch 导入」界面。不含视觉描述功能。
+version: 1.0.0
+platform: both
+
+# 源码文件映射（与 cordis_define 的 code.host / code.client 一一对应）
+files:
+  host: host.js
+  client: client.js
+
+# 依赖的 DSH 能力（移植时 AI 需在目标环境用 Inspect 逐项核对）
+dependencies:
+  host:
+    services: [subprocess, settings, credentials, tools]
+    builtins: [harness]
+  client:
+    services: [slots]
+    builtins: [host]
+    slots:
+      - settings.section

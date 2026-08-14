@@ -1,0 +1,34 @@
+{
+  "library": "custom-plugins",
+  "syncVia": "deepseek-harness-master fork（origin: chenhaolove89/deepseek-harness）",
+  "plugins": [
+    {
+      "id": "ccsw-1",
+      "name": "CCSwitch 导入 + AI 工具 + 视觉描述",
+      "path": "ccsw-1",
+      "publicRepo": "https://github.com/chenhaolove89/dsh-ccswitch-import.git",
+      "platform": "both"
+    },
+    {
+      "id": "ccsw-lite",
+      "name": "CCSwitch 导入 Lite",
+      "path": "ccsw-lite",
+      "publicRepo": "https://github.com/chenhaolove89/dsh-ccswitch-import-lite.git",
+      "platform": "both"
+    },
+    {
+      "id": "pdeep",
+      "name": "Prompt Deepen 提示词深化",
+      "path": "pdeep",
+      "publicRepo": "https://github.com/chenhaolove89/dsh-prompt-deepen.git",
+      "platform": "both"
+    },
+    {
+      "id": "template-demo",
+      "name": "新插件模板",
+      "path": "template-demo",
+      "publicRepo": null,
+      "platform": "both"
+    }
+  ]
+}

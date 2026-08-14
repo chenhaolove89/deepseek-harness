@@ -1,0 +1,23 @@
+# prompt-deepen 插件清单（manifest）
+# 这是给"移植 AI"看的规格文件，不是可直接挂载的 agent preset。
+id: prompt-deepen
+name: Prompt Deepen 提示词深化
+description: 在输入框工具行右侧添加「深化」按钮，用当前选定模型对草稿提示词进行深化与优化，结果写回输入框。
+version: 1.0.0
+platform: both
+
+# 源码文件映射（与 cordis_define 的 code.host / code.client 一一对应）
+files:
+  host: host.js
+  client: client.js
+
+# 依赖的 DSH 能力（移植时 AI 需在目标环境用 Inspect 逐项核对）
+dependencies:
+  host:
+    services: [llm, agentDefaultModel]
+    builtins: [harness]
+  client:
+    services: [slots, timer]
+    builtins: [host]
+    slots:
+      - conversation.input.right

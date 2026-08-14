@@ -1,0 +1,23 @@
+# demo-hello 插件清单（manifest）
+# 说明：这是给"移植 AI"看的规格文件，不是可直接挂载的 agent preset。
+# 平台：host / client / both
+id: demo-hello
+name: Demo Hello
+description: 示例插件：Host 注册 hello_say 工具，Client 在运行卡显示问候。
+version: 0.1.0
+platform: both
+
+# 源码文件映射（与 cordis_define 的 code.host / code.client 一一对应）
+files:
+  host: host.js
+  client: client.js
+
+# 依赖的 DSH 能力（移植时 AI 需在目标环境用 Inspect 逐项核对）
+dependencies:
+  host:
+    services: [harness]
+    builtins: []
+  client:
+    services: [slots]
+    slots:
+      - tool.view.cordis
