@@ -98,7 +98,8 @@ return {
         }
         return { error: { code: code, message: message } }
       }
-      const last = outText.lastIndexOf('\r\n\r\n')
+      // 首个 \r\n\r\n 是「响应头/正文」分界；SSE 正文末尾还有自己的 \r\n\r\n 事件终止符，不能取 lastIndexOf。
+      const last = outText.indexOf('\r\n\r\n')
       const headers = last >= 0 ? outText.slice(0, last) : outText
       const bodyText = last >= 0 ? outText.slice(last + 4) : ''
       const m = /^mcp-session-id:\s*(.+)$/im.exec(headers)
