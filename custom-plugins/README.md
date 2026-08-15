@@ -53,6 +53,19 @@ DSH 动态插件只存在于进程内存，进程重启后定义丢失。恢复�
 `host.js` / `client.js` 内容，调用 `cordis_define`（kind: new）与 `cordis_run` 重新创建运行即可。
 client 半首次运行需要用户在 GUI 中批准。
 
+## 插件自动更新（桌面客户端）
+
+桌面客户端（`desktop-client`）启动时自动检查插件更新，覆盖全部插件通道：
+
+| 通道 | 更新方式 | 新插件如何自动纳入 |
+| --- | --- | --- |
+| **web profile npm 插件** | 对比 npm registry，有新版执行 `dsh plugin --profile web add <包名>` | 把插件装进 `~/.dsh/profiles/web` 的 `package.json` `dependencies`（非 `@deepseek-ai/*` 包）即自动纳入，无需改代码 |
+| **仓库静态插件**（`packages/client`） | 源码比 `lib/` 产物新时执行 `tsc -b` + `bundle` 重建 | 新增静态插件时把包名加进 `desktop-client\config.json` 的 `staticPlugins` 数组（默认含 `ccswitch-import`、`prompt-deepen`） |
+| **custom-plugins 动态源码** | 随 fork 仓库 `git pull` 自动同步 | 本目录新增插件文件夹即自动随仓库同步（运行态恢复仍需 AI，见上节） |
+
+> 检查时机：桌面客户端启动时（`checkPluginsOnStart: true`）与托盘「检查更新」手动触发；
+> 发现更新弹窗，确认后应用。更新应用后的 host 半改动需在托盘「重启服务」生效。
+
 ## 技能与 preset 种子
 
 - `skills\plugin-sourcelib\` —— 本工作流的技能种子（setup 时安装到 `~/.dsh\skills\`）

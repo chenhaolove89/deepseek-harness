@@ -40,3 +40,6 @@ worktrees/
 .typert-*/
 # Local chrome-control runtime artifacts (helper + screenshots)
 .dsh-chrome/
+
+# Desktop installer staging output (never commit)
+/DeepSeekHarness/
