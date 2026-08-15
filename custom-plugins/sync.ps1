@@ -38,7 +38,32 @@ switch ($Action) {
             Copy-Item $chromeHelper (Join-Path $runtimeDir 'chrome-helper.mjs') -Force
             Write-Host "[chrome] helper -> $runtimeDir"
         }
-        Write-Host 'setup 完成：新会话将自动加载 plugin-sourcelib 技能与已安装的 preset。'
+        # 4) 构建常驻静态插件包（lib/ 不入库，新电脑 clone 后需重建；
+        #    这两个包由 web-app bundle 组合挂载，构建后随 GUI 启动自动常驻，无需 cordis_define）
+        $RepoRoot = Split-Path $Root -Parent
+        $PluginDirs = @('ccswitch-import', 'prompt-deepen')
+        $missing = @($PluginDirs | Where-Object {
+            -not (Test-Path (Join-Path $RepoRoot ("packages\client\$_`\lib\index.js")))
+        })
+        if ($missing.Count -gt 0) {
+            Write-Host "[build] 缺失产物: $($missing -join ', ') —— 运行 tsc + tsdown 重建..."
+            Push-Location $RepoRoot
+            try {
+                pnpm install
+                foreach ($p in $missing) {
+                    Write-Host "[build] tsc -b $p"
+                    pnpm --filter "@deepseek-ai/dsh-$p" exec tsc -b
+                    Write-Host "[build] bundle $p"
+                    pnpm --filter "@deepseek-ai/dsh-$p" bundle
+                }
+            }
+            finally { Pop-Location }
+            Write-Host '[build] 插件包构建完成。'
+        }
+        else {
+            Write-Host '[build] 插件包产物已存在，跳过构建。'
+        }
+        Write-Host 'setup 完成：新会话将自动加载 plugin-sourcelib 技能与已安装的 preset；静态插件随组合常驻。'
     }
     'status' {
         Write-Host "库根: $Root"
