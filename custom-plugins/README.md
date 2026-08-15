@@ -20,20 +20,22 @@
 
 ## 现有插件
 
-| 文件夹 | 插件 | 公开仓库（分享用） |
-| --- | --- | --- |
-| ccsw-1 | CCSwitch 导入 + AI 工具 + 视觉描述（`ccswitch.list`/`ccswitch.import` RPC + `ccswitch_list`/`ccswitch_import`/`visual_describe` 工具） | dsh-ccswitch-import |
-| ccsw-lite | CCSwitch 导入 Lite | dsh-ccswitch-import-lite |
-| pdeep | Prompt Deepen 提示词深化（`prompt-deepen` RPC） | dsh-prompt-deepen |
-| chrome-control | Chrome 控制（CDP）：16 个 chrome_* 工具，驱动专用 Chrome 实例（含预设平面版 `preset/plugin.js`，可挂进 vue-admin 预设） | dsh-chrome-control |
-| template-demo | 新插件模板（hello 示例） | — |
+| 文件夹 | 插件 | 状态 | 公开仓库（分享用） |
+| --- | --- | --- | --- |
+| ccsw-1 | CCSwitch 导入 + AI 工具 + 视觉描述（`ccswitch.list`/`ccswitch.import` RPC + `ccswitch_list`/`ccswitch_import`/`visual_describe` 工具） | **已静态化常驻** → `packages/client/ccswitch-import`（web-app 组合挂载） | dsh-ccswitch-import |
+| ccsw-lite | CCSwitch 导入 Lite | 动态源码备份 | dsh-ccswitch-import-lite |
+| pdeep | Prompt Deepen 提示词深化（`prompt-deepen` RPC） | **已静态化常驻** → `packages/client/prompt-deepen`（web-app 组合挂载） | dsh-prompt-deepen |
+| chrome-control | Chrome 控制（CDP）：16 个 chrome_* 工具，驱动专用 Chrome 实例（含预设平面版 `preset/plugin.js`，可挂进 vue-admin 预设） | 动态源码备份 | dsh-chrome-control |
+| template-demo | 新插件模板（hello 示例） | — | — |
+
+> **静态化说明**：ccsw-1 与 pdeep 已改造为仓库内 npm 包（`packages/client/`），由 `packages/bundle/web-app/cordis.patch.yml` 组合挂载。启动 GUI 即自动常驻（进程级、所有会话生效、重启不丢），**无需 cordis_define / cordis_run / UI 授权**。本目录的 `ccsw-1/`、`pdeep/` 保留为动态源码备份与移植规格。
 
 ## 新电脑部署（换新机）
 
 1. `git clone https://github.com/chenhaolove89/deepseek-harness.git`（已有则 `git pull`）
-2. 按仓库说明安装/运行 harness
-3. 运行 `custom-plugins\sync.ps1 setup` —— 把 `skills\` 装到 `~/.dsh\skills`、`presets\` 装到 `~/.dsh\.agent-presets`
-4. 新会话中 AI 自动加载 **plugin-sourcelib** 技能，按"流程 3"逐个用 `cordis_define` + `cordis_run` 恢复本目录插件（client 半首次运行需在 GUI 批准）
+2. 按仓库说明安装/运行 harness（含 `pnpm install` 与包构建）
+3. 运行 `custom-plugins\sync.ps1 setup` —— 把 `skills\` 装到 `~/.dsh\skills`、`presets\` 装到 `~/.dsh\.agent-presets`，并**自动构建静态插件包**（`lib/` 不入库，新机 clone 后由 setup 用 tsc + tsdown 重建）
+4. 启动 GUI —— **静态插件随组合自动常驻**，无需任何恢复步骤
 
 ## 日常同步
 
