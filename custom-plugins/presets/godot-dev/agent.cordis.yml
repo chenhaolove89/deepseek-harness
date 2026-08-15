@@ -262,3 +262,12 @@
     serverName: godot
     transport: streamable-http
     url: http://127.0.0.1:8000/mcp
+
+# ── Godot 控制工具（持久化插件，静态版 godot-ctrl）────────────────────────────
+#
+# 动态插件（cordis_define）随进程重启消失；这里用文件插件行持久化同一套工具。
+# 纯 ESM 模块、无外部 import（不依赖 node_modules 解析），直接 ctx.tools.register
+# 注册 27 个 godot_* 原始 ToolDefinition。需要 Godot 编辑器运行且 godot_ai 插件
+# 已启用（MCP 监听 127.0.0.1:8000）；不可达时工具返回结构化错误而非抛异常。
+- id: godot-ctrl
+  name: ./plugins/godot-ctrl.mjs
