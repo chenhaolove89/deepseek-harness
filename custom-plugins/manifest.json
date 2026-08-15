@@ -31,6 +31,13 @@
       "platform": "host"
     },
     {
+      "id": "godot-ctrl",
+      "name": "Godot AI 控制（godot_1）",
+      "path": "godot-ctrl",
+      "publicRepo": null,
+      "platform": "host"
+    },
+    {
       "id": "template-demo",
       "name": "新插件模板",
       "path": "template-demo",

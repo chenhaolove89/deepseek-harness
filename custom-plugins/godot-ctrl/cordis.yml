@@ -1,0 +1,30 @@
+# godot-ctrl 插件清单（manifest）
+# 说明：这是给"移植 AI"看的规格文件，不是可直接挂载的 agent preset。
+# 平台：host / client / both
+id: godot-1
+name: Godot AI 控制
+description: 通过 Godot AI (godot_ai) MCP 服务器让 AI 控制 Godot 编辑器/游戏：场景与节点编辑、脚本、运行/停止、游戏输入模拟、GUT 测试、日志、截图等。
+version: 0.1.0
+platform: host
+
+# 源码文件映射（与 cordis_define 的 code.host / code.client 一一对应）
+files:
+  host: host.js
+
+# 依赖的 DSH 能力（移植时 AI 需在目标环境用 Inspect 逐项核对）
+dependencies:
+  host:
+    services: [subprocess, fs]
+    builtins: [harness]
+    # 模型工具：godot_status/godot_sessions/godot_session_activate/godot_scene_tree/
+    # godot_scene_open/godot_scene_save/godot_scene_create/godot_node_get/godot_node_create/
+    # godot_node_set/godot_node_find/godot_node_manage/godot_script_create/godot_script_read/
+    # godot_script_patch/godot_script_attach/godot_project_run/godot_project_stop/
+    # godot_project_settings/godot_test_run/godot_test_results/godot_game/godot_eval/
+    # godot_logs/godot_screenshot/godot_batch/godot_call（共 27 个）
+
+# 外部依赖（不在 DSH 内）
+external:
+  server: Godot AI Python MCP 服务器（github.com/hi-godot/godot-ai），
+          streamable-http @ http://127.0.0.1:8000/mcp，
+          由 Godot 编辑器内的 godot_ai 插件（v3.x）自动拉起，或手动 python -m godot_ai 启动
