@@ -273,6 +273,15 @@
     - id: ui-trajectory
       name: '@deepseek-ai/dsh-client-ui-trajectory'
 
+    # User plugins (custom-plugins library): CCSwitch provider import + Prompt
+    # Deepen. Dual-face rows: the node half registers the AI tools and the
+    # Remote gateways; the dsh.client declaration feeds the browser roster.
+    - id: ccswitch-import
+      name: '@deepseek-ai/dsh-ccswitch-import'
+
+    - id: prompt-deepen
+      name: '@deepseek-ai/dsh-prompt-deepen'
+
 # ── the agent plane moves behind agent presets ─────────────────────────────
 #
 # Every row below composes what ONE agent contributes to the host registries:
