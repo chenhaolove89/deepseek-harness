@@ -295,6 +295,7 @@
     { "path": "./packages/lsp/tool-lsp" },
     { "path": "./packages/client/ccswitch-import/tsconfig.host.json" },
     { "path": "./packages/client/prompt-deepen/tsconfig.host.json" },
+    { "path": "./packages/client/git/tsconfig.host.json" },
     { "path": "./apps/cli" }
   ]
 }

@@ -38,6 +38,14 @@
       "platform": "host"
     },
     {
+      "id": "dsh-git",
+      "name": "Codex 式 Git 管理",
+      "path": "dsh-git",
+      "publicRepo": null,
+      "platform": "both",
+      "staticizedTo": "packages/client/git (@deepseek-ai/dsh-git)"
+    },
+    {
       "id": "template-demo",
       "name": "新插件模板",
       "path": "template-demo",

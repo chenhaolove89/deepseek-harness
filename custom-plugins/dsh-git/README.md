@@ -73,6 +73,17 @@
 pwsh -File custom-plugins\validate.ps1 -Path custom-plugins\dsh-git
 ```
 
+## 静态化状态（2026-08-17 更新）
+
+本插件已**静态化常驻** → 仓库内 `packages/client/git`（包名 `@deepseek-ai/dsh-git`），
+由 `packages/bundle/web-app/cordis.patch.yml` 组合挂载，启动 GUI 即自动常驻（进程级、所有会话生效、重启不丢），
+**无需 cordis_define / cordis_run / UI 授权**。本目录保留为动态源码备份与移植规格。
+
+- 静态包 Host 半：`packages/client/git/src/index.ts`（20 工具 + `GitGateway` Remote + `dsh-git` 设置命名空间）
+- 静态包 Client 半：`packages/client/git/src/client/`（Git 面板 + Git 设置页）
+- 设置页：GUI「设置 → Git 管理」配置 `commitModel`（provider/model）与 `autoRefreshMs`，持久化到 `~/.dsh/settings.yaml` 的 `dsh-git` 命名空间（替代旧的 `~/.dsh/dsh-git.json`）
+- 桌面客户端 `config.json` 的 `staticPlugins` 已加入 `git`，源码变更后自动重建
+
 ## 已知限制（Known Limitations）
 
 - 危险工具在会话审批策略为 `never` 时会被审批服务拒绝（设计如此：无审批即拒绝，不绕过）；

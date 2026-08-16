@@ -75,7 +75,8 @@
     "@deepseek-ai/dsh-settings": "workspace:^",
     "@deepseek-ai/dsh-typert-registry": "workspace:^",
     "@deepseek-ai/dsh-ccswitch-import": "workspace:^",
-    "@deepseek-ai/dsh-prompt-deepen": "workspace:^"
+    "@deepseek-ai/dsh-prompt-deepen": "workspace:^",
+    "@deepseek-ai/dsh-git": "workspace:^"
   },
   "devDependencies": {
     "@deepseek-ai/dsh-agent": "workspace:^",
