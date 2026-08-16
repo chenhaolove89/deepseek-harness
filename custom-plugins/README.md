@@ -26,7 +26,7 @@
 | ccsw-lite | CCSwitch 导入 Lite | 动态源码备份 | dsh-ccswitch-import-lite |
 | pdeep | Prompt Deepen 提示词深化（`prompt-deepen` RPC） | **已静态化常驻** → `packages/client/prompt-deepen`（web-app 组合挂载） | dsh-prompt-deepen |
 | chrome-control | Chrome 控制（CDP）：16 个 chrome_* 工具，驱动专用 Chrome 实例（含预设平面版 `preset/plugin.js`，可挂进 vue-admin 预设） | 动态源码备份 | dsh-chrome-control |
-| dsh-git | Codex 式 Git 管理（`git_status`/`git_diff`/`git_log` 只读工具，P0；后续加写操作与面板） | 动态源码备份（P0 已运行） | — |
+| dsh-git | Codex 式 Git 管理 v1.0：20 个 git 工具（只读/写/网络/危险确认/AI 提交信息）+ 15 RPC + Git 管理面板（侧边栏/输入框入口，overlay 浮层） | 动态源码备份（v1.0 已运行） | — |
 | template-demo | 新插件模板（hello 示例） | — | — |
 
 > **静态化说明**：ccsw-1 与 pdeep 已改造为仓库内 npm 包（`packages/client/`），由 `packages/bundle/web-app/cordis.patch.yml` 组合挂载。启动 GUI 即自动常驻（进程级、所有会话生效、重启不丢），**无需 cordis_define / cordis_run / UI 授权**。本目录的 `ccsw-1/`、`pdeep/` 保留为动态源码备份与移植规格。
