@@ -250,6 +250,7 @@ catch(e){process.stdout.write(JSON.stringify({ok:false,error:String((e&&e.messag
         source: { kind: 'user' },
       }
       let out = ''
+      let sawDelta = false
       let finish = null
       for await (const chunk of llm.stream({
         provider: route.provider,
@@ -258,8 +259,8 @@ catch(e){process.stdout.write(JSON.stringify({ok:false,error:String((e&&e.messag
         signal: signal,
         maxTokens: 2048,
       })) {
-        if (chunk.type === 'text-delta') out += chunk.text
-        else if (chunk.type === 'block-end' && chunk.block && chunk.block.type === 'text') out += chunk.block.text
+        if (chunk.type === 'text-delta') { out += chunk.text; sawDelta = true }
+        else if (chunk.type === 'block-end' && chunk.block && chunk.block.type === 'text' && !sawDelta) out += chunk.block.text
         else if (chunk.type === 'finish') finish = chunk
       }
       if (finish && finish.reason && finish.reason.kind === 'error') {
