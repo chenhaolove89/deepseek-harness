@@ -168,7 +168,16 @@ return {
       const allUnstaged = unstagedFiles.concat(untrackedFiles).map(function (x) { return x.path })
 
       function changesTab() {
-        if (!s) return e('div', { className: 'gitp-empty' }, loading ? '加载中…' : '点击「刷新」读取仓库状态')
+        if (!s) {
+          if (loading) return e('div', { className: 'gitp-empty' }, '加载中…')
+          if (data && data.notARepo) {
+            return e('div', null,
+              e('div', { className: 'gitp-err', style: { marginBottom: 8 } }, '⚠ ' + data.notARepo),
+              e('div', { className: 'gitp-empty' }, '请在顶部填写 git 仓库目录后点「刷新」'),
+            )
+          }
+          return e('div', { className: 'gitp-empty' }, '点击「刷新」读取仓库状态')
+        }
         if (s.clean && !conflictFiles.length) return e('div', { className: 'gitp-empty' }, '工作区干净 ✓')
         return e('div', null,
           conflictFiles.length ? e('div', null,

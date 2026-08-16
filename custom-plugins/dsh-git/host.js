@@ -808,7 +808,21 @@ catch(e){process.stdout.write(JSON.stringify({ok:false,error:String((e&&e.messag
     }
 
     harness.handle('git.panelState', rpcWrap(async function (args) {
-      const s = await statusObject(null, args.repoPath)
+      let s
+      try {
+        s = await statusObject(null, args.repoPath)
+      } catch (e) {
+        // 目录不是 git 仓库 / 不存在：返回友好状态而非硬错误，面板展示提示而非红框。
+        const cfg = await readConfig()
+        return {
+          ok: true,
+          status: null,
+          notARepo: String((e && e.message) || e),
+          log: '',
+          branches: [],
+          commitModel: cfg.commitModel,
+        }
+      }
       const logR = await execGit(['-C', s.root, 'log', '--pretty=format:%h|%an|%ad|%s', '--date=short', '-n', '15'], null)
       const branchR = await execGit(['-C', s.root, 'branch', '--format=%(refname:short)|%(HEAD)|%(upstream:short)'], null)
       const cfg = await readConfig()
@@ -863,6 +877,14 @@ catch(e){process.stdout.write(JSON.stringify({ok:false,error:String((e&&e.messag
       const tail = (typeof args.path === 'string' && args.path.trim()) ? ['--', args.path.trim()] : []
       const r = await execGitOk(['-C', root, 'diff'].concat(head, tail), null, 'git diff')
       return { ok: true, text: r.stdout.trim() ? cap(r.stdout, 200000, '建议用 stat 或 path 缩小范围') : '(无变更)' }
+    }))
+
+    harness.handle('git.show', rpcWrap(async function (args) {
+      const root = await repoRootOf(null, args.repoPath)
+      const commit = (typeof args.commit === 'string' && args.commit.trim()) ? args.commit.trim() : 'HEAD'
+      const tail = (typeof args.path === 'string' && args.path.trim()) ? ['--', args.path.trim()] : []
+      const r = await execGitOk(['-C', root, 'show'].concat(args.stat ? ['--stat'] : [], ['--format=medium', commit], tail), null, 'git show')
+      return { ok: true, text: r.stdout.trim() ? cap(r.stdout, 200000, '建议用 stat=true 或 path 缩小范围') : '(无内容)' }
     }))
 
     harness.handle('git.log', rpcWrap(async function (args) {
