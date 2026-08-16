@@ -1,0 +1,21 @@
+# dsh-git 插件清单（manifest）
+# 说明：这是给"移植 AI"看的规格文件，不是可直接挂载的 agent preset。
+# 平台：host / client / both
+id: gitp-1
+name: dsh-git（Codex 式 Git 管理）
+description: Codex 式 Git 管理插件。P0（当前）：Host 注册 git_status / git_diff / git_log 三个只读结构化工具（porcelain v2 解析、numstat 统计、日志格式化、输出截断）。后续阶段：写操作工具（stage/commit/branch/reset/push 等）、Client 侧边栏 + 输入框入口的 Git 管理面板、提交信息 AI 生成。
+version: 0.1.0
+platform: host
+
+# 源码文件映射（与 cordis_define 的 code.host / code.client 一一对应）
+files:
+  host: host.js
+
+# 依赖的 DSH 能力（移植时 AI 需在目标环境用 Inspect 逐项核对）
+dependencies:
+  host:
+    services: [subprocess]
+    builtins: [harness]
+  client:
+    services: []
+    slots: []
