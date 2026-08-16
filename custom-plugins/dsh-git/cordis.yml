@@ -1,21 +1,26 @@
 # dsh-git 插件清单（manifest）
 # 说明：这是给"移植 AI"看的规格文件，不是可直接挂载的 agent preset。
 # 平台：host / client / both
-id: gitp-1
+id: gitp-2
 name: dsh-git（Codex 式 Git 管理）
-description: Codex 式 Git 管理插件。P0（当前）：Host 注册 git_status / git_diff / git_log 三个只读结构化工具（porcelain v2 解析、numstat 统计、日志格式化、输出截断）。后续阶段：写操作工具（stage/commit/branch/reset/push 等）、Client 侧边栏 + 输入框入口的 Git 管理面板、提交信息 AI 生成。
-version: 0.1.0
-platform: host
+description: Codex 式 Git 管理插件。Host：20 个 git 工具（status/diff/log/show/blame 只读；stage/unstage/commit/commit_message(AI)/branch/checkout/reset/revert/stash/tag/clean 写操作；fetch/pull/push 网络；run 兜底；危险操作需 confirm+审批）+ 15 个面板 RPC（git.*，含 git.show）。Client：Git 管理面板（侧边栏 sidebar.footer.action + 输入框 conversation.input.left 入口，shell.overlay 浮层：变更/暂存/提交/AI 生成信息/历史/分支/同步/回滚/清理/stash，危险操作二次确认）。
+version: 1.0.0
+platform: both
 
 # 源码文件映射（与 cordis_define 的 code.host / code.client 一一对应）
 files:
   host: host.js
+  client: client.js
 
 # 依赖的 DSH 能力（移植时 AI 需在目标环境用 Inspect 逐项核对）
 dependencies:
   host:
-    services: [subprocess]
+    services: [subprocess, llm, approval]
     builtins: [harness]
   client:
-    services: []
-    slots: []
+    services: [slots]
+    builtins: [host]
+    slots:
+      - sidebar.footer.action
+      - conversation.input.left
+      - shell.overlay
